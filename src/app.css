@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#nprogress .bar {
+	@apply !bg-primary-500;
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth; /* Smooth scrolling on the whole document */
+		scroll-padding-top: 200px; /* When click anchor link, scroll this amount above it. */
+	}
+	/* Remove smooth scrolling for people with 'prefers-reduced-motion: reduce' */
+	@media screen and (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+	}
+	.heading {
+		@apply font-heading font-bold leading-tight;
+	}
+	h1 {
+		@apply heading text-2xl md:text-4xl;
+	}
+	h2 {
+		@apply heading text-2xl;
+	}
+	h3 {
+		@apply heading text-base;
+	}
+	/* Add class 'theme-form' to a form element (or other parent) to apply these styles */
+	.theme-form {
+		input[type='text'],
+		input[type='password'],
+		input[type='email'],
+		input[type='number'],
+		input[type='url'],
+		input[type='date'],
+		input[type='datetime-local'],
+		input[type='month'],
+		input[type='week'],
+		input[type='time'],
+		input[type='search'],
+		input[type='tel'] {
+			@apply form-input;
+		}
+		select[multiple] {
+			@apply form-multiselect;
+		}
+		select {
+			@apply form-select;
+		}
+		textarea {
+			@apply form-textarea;
+		}
+		input[type='radio'] {
+			@apply form-radio;
+		}
+
+		input[type='checkbox'] {
+			@apply form-checkbox;
+		}
+	}
+
+	.theme-rounded {
+		@apply rounded-sm;
+	}
+	.theme-rounded-t {
+		@apply rounded-t-sm;
+	}
+	.theme-rounded-b {
+		@apply rounded-b-sm;
+	}
+	.theme-rounded-tl {
+		@apply rounded-tl-sm;
+	}
+	.theme-rounded-tr {
+		@apply rounded-tr-sm;
+	}
+	.theme-rounded-bl {
+		@apply rounded-bl-sm;
+	}
+	.theme-rounded-br {
+		@apply rounded-br-sm;
+	}
+}
+
+@layer components {
+	.link {
+		@apply inline-flex items-center justify-center space-x-1 text-primary-500 transition-all duration-300 ease-in-out hover:text-primary-700;
+	}
+	.btn {
+		@apply theme-rounded flex items-center justify-center border border-transparent bg-primary-700 px-4 py-2 text-base font-medium text-white shadow-md shadow-primary-700/30 transition-all duration-300 ease-in-out hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+	}
+	.btn-alt {
+		@apply btn bg-primary-100 text-primary-700 shadow-primary-300/30 hover:bg-primary-200;
+	}
+}
