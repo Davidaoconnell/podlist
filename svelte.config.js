@@ -14,7 +14,8 @@ const config = {
 		alias: {
 			$components: './src/components',
 			$images: './src/assets/images',
-			$icons: './src/assets/icons'
+			$icons: './src/assets/icons',
+			$sanity: './src/sanity'
 		}
 	}
 	// vitePlugin: {

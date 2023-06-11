@@ -1,93 +1,71 @@
 <script lang="ts">
-	import type { PageData, ActionData } from './$types';
-	// export let data: PageData;
-	// export let form: ActionData;
-	import PlaceholderJPG from '../assets/images/placeholder.jpg?width=300&imagetools';
-	import { Icon } from '@steeze-ui/svelte-icon';
-	import { PresentationChartBar } from '@steeze-ui/heroicons';
-	// import { enhance } from '$app/forms';
-	// import SubmitButton from '$components/form/SubmitButton/SubmitButton.svelte';
+	import type { PageData } from './$types';
+	export let data: PageData;
 	import Container from '$components/common/Container.svelte';
-	import Img from '$components/common/cf-image/Img.svelte';
-	import Hero from './Hero.svelte';
-	import WufooForm from '$components/common/Wufoo/WufooForm.svelte';
-	// let message = '';
-	// $: number = 1;
+	console.log(data);
 </script>
 
-<!-- Example with ratios -->
-<Hero />
-
 <Container>
-	<p>Image component test.</p>
-	<!-- Standard image with max width and height of 650 and 300. Expected to be 50% of screen width at lg breakpoint -->
-	<Img
-		src="/img/test-1.jpg"
-		alt=""
-		width={650}
-		height={300}
-		sizes={{ lg: 50 }}
-		class="lg:w-1/2"
-		transforms={{ blur: 5 }}
-	/>
-	<Img src="/img/placeholder.jpg" alt="" width={1920} height={1280} />
-	<!-- Some transforms. WIP with types. This should be a linting error because we aren't providing 'gravity' -->
-	<!-- <Img
-		src="/img/test-1.jpg"
-		alt=""
-		width={900}
-		height={1024}
-		transforms={{ fit: 'crop', blur: 5 }}
-	/> -->
+	<!-- {#each data.posts as post}
+		<div>
+			<h1>{post.title}</h1>
+			<p>{post.slug}</p>
+			<img src={post.featuredImage.url} alt={post.title} />
+		</div>
+		<a href={`/blog/${post.slug}/`} class="link">{post.title} </a>
+	{/each} -->
+
+	<div class="bg-white py-24 sm:py-32">
+		<div class="mx-auto max-w-7xl px-6 lg:px-8">
+			<div class="mx-auto max-w-2xl text-center">
+				<h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
+				<p class="mt-2 text-lg leading-8 text-gray-600">
+					Learn how to grow your business with our expert advice.
+				</p>
+			</div>
+			<div
+				class="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+			>
+				{#each data.posts as post}
+					<article
+						class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-80 sm:pt-48 lg:pt-80"
+					>
+						<img
+							src={post.featuredImage.url}
+							alt=""
+							class="absolute inset-0 -z-10 h-full w-full object-cover"
+						/>
+						<div class="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40" />
+						<div class="absolute inset-0 -z-10 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+
+						<div
+							class="flex flex-wrap items-center gap-y-1 overflow-hidden text-sm leading-6 text-gray-300"
+						>
+							<time datetime="2020-03-16" class="mr-8">{post.publishedAt}</time>
+							<div class="-ml-4 flex items-center gap-x-4">
+								<svg viewBox="0 0 2 2" class="-ml-0.5 h-0.5 w-0.5 flex-none fill-white/50">
+									<circle cx="1" cy="1" r="1" />
+								</svg>
+								<div class="flex gap-x-2.5">
+									<!-- <img
+										src={post.author.featuredImage}
+										alt=""
+										class="h-6 w-6 flex-none rounded-full bg-white/10"
+									/> -->
+									{post.author.name}
+								</div>
+							</div>
+						</div>
+						<h3 class="mt-3 text-lg font-semibold leading-6 text-white">
+							<a href={`/blog/${post.slug}/`}>
+								<span class="absolute inset-0" />
+								{post.title}
+							</a>
+						</h3>
+					</article>
+				{/each}
+				<!-- More posts... -->
+			</div>
+		</div>
+	</div>
 </Container>
-
-<div class="mx-auto max-w-xl">
-	<WufooForm formHash="ziy2ddx1wsommr" />
-</div>
-
-<!-- <Container as="section" class="space-y-20">
-	<h1>IQ Starter SvelteKit</h1>
-	<img src="/img/placeholder.jpg?width=500" width="500" height="333" alt="placeholder" />
-	<img src="/img/placeholder.jpg?width=800&blur=10" width="800" height="533" alt="placeholder" />
-	<img src="/img/placeholder-2.jpg?width=300" width="300" height="200" alt="placeholder2" />
-	<img src="/img/placeholder-3.jpg?width=400" width="400" height="599" alt="placeholder3" />
-	<img
-		src="/img/placeholder-hero-01.jpg?width=500"
-		width="500"
-		height="333"
-		alt="placeholderhero"
-	/>
-
-	<img src="/img/logo-placeholder.svg" width="160" height="30" alt="should serve original svg" />
-	<div>
-		<h2>Example URL Search Params</h2>
-		<p>Message: {data.message}</p>
-		<input autofocus type="text" bind:value={message} name="message" placeholder="Change me" />
-		<a href="/?message={message}">"Search"</a>
-	</div>
-	<div>
-		<h2>Example POST-based form (e.g. to CRUD)</h2>
-		<form use:enhance method="POST">
-			<input type="number" bind:value={number} name="number" />
-			<SubmitButton botProtectionId="double-up" />
-			{#if form?.success}
-				<p class="text-green-700">Form success.</p>
-			{/if}
-			{#if form?.fieldErrors?.number}
-				<p class="text-red-700">{form?.fieldErrors?.number}</p>
-			{/if}
-		</form>
-	</div>
-	<div>
-		<h2>Manipulate images inside the project</h2>
-		<img src={PlaceholderJPG} width="300" height="200" alt="placeholder" />
-	</div>
-	<h2>Comes with Icons</h2>
-	<div class="flex">
-		<Icon src={PresentationChartBar} solid class="h-6 w-6 text-teal-500" />
-
-		<Icon src={PresentationChartBar} size="128" class="text-green-500" />
-
-		<Icon src={PresentationChartBar} class="h-6 w-6 text-red-500" />
-	</div>
-</Container> -->
